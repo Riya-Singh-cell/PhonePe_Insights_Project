@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PhonePe Insights Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>PhonePe Insights Dashboard</h1>
+
+  <!-- Filter Section -->
+  <label for="year">Year:</label>
+  <select id="year">
+    <option value="">All</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+  </select>
+
+  <label for="quarter">Quarter:</label>
+  <select id="quarter">
+    <option value="">All</option>
+    <option value="1">Q1</option>
+    <option value="2">Q2</option>
+    <option value="3">Q3</option>
+    <option value="4">Q4</option>
+  </select>
+
+  <button id="btn-filter">Show Filtered Transactions</button>
+
+  <!-- Transaction Count Chart -->
+  <h2>Transaction Count by Type</h2>
+  <canvas id="transactionsChart" width="600" height="400"></canvas>
+
+  <!-- Transaction Amount Chart -->
+  <h2>Transaction Amount Distribution</h2>
+  <canvas id="amountChart" width="600" height="400"></canvas>
+
+  <!-- Top Mobile Brands Chart -->
+  <h2>Top Mobile Brands</h2>
+  <canvas id="brandChart" width="600" height="400"></canvas>
+
+  <script>
+    // Filtered Transactions (Bar Chart)
+    document.getElementById("btn-filter").addEventListener("click", function () {
+      const year = document.getElementById("year").value;
+      const quarter = document.getElementById("quarter").value;
+
+      let url = "http://127.0.0.1:8000/aggregated/transactions";
+      const params = [];
+      if (year) params.push(`year=${year}`);
+      if (quarter) params.push(`quarter=${quarter}`);
+      if (params.length > 0) {
+        url += "?" + params.join("&");
+      }
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const labels = data.map(item => item.name);
+          const counts = data.map(item => item.count);
+
+          const ctx = document.getElementById("transactionsChart").getContext("2d");
+          new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: labels,
+              datasets: [{
+                label: "Transaction Count",
+                data: counts,
+                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        });
+    });
+
+    // Initial Pie Chart for Transaction Amount
+    fetch("http://127.0.0.1:8000/aggregated/transactions")
+      .then(response => response.json())
+      .then(data => {
+        const labels = data.map(item => item.name);
+        const amounts = data.map(item => item.amount);
+
+        const ctx = document.getElementById("amountChart").getContext("2d");
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: labels,
+            datasets: [{
+              label: "Transaction Amount",
+              data: amounts,
+              backgroundColor: [
+                "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0",
+                "#9966FF", "#FF9F40", "#66FF66", "#FF66B2"
+              ]
+            }]
+          },
+          options: {
+            responsive: true
+          }
+        });
+      });
+
+    // Mobile Brands Chart
+    fetch("http://127.0.0.1:8000/aggregated/brands")
+      .then(response => response.json())
+      .then(data => {
+        const labels = data.map(item => item.brand);
+        const counts = data.map(item => item.count);
+
+        const ctx = document.getElementById("brandChart").getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [{
+              label: "Users by Brand",
+              data: counts,
+              backgroundColor: "rgba(255, 99, 132, 0.6)",
+              borderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
