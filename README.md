@@ -29,29 +29,6 @@ With increasing digital payment adoption, analyzing large-scale transaction data
 - State- and district-level mapping
 - Top-performing states, districts, and brands
 
-
-## Project Structure
-PhonePe_Insights_Project/
-├── app/
-│ └── routes/
-│ ├── aggregated.py
-│ ├── map.py
-│ └── top.py
-├── exports/
-│ └── transformed/
-│ ├── aggregated_transaction.csv
-│ ├── aggregated_user.csv
-│ └── ... (other CSVs)
-├── pulse/
-│ └── data/
-├── scripts/
-│ └── transform_and_export.py
-├── main.py
-├── index.html
-├── style.css
-└── README.md
-
-
 ## Approach
 
 ### 1. Data Extraction
