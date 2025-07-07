@@ -1,73 +1,53 @@
-# PhonePe Transaction Insights
+# PhonePe Transaction Insights Dashboard
+
+A comprehensive data visualization dashboard for analyzing PhonePe transaction data across different states and time periods using FastAPI, PostgreSQL, Python, and Streamlit.
 
 ## Project Overview
 
-This project analyzes and visualizes PhonePe's digital transaction data across various categories, states, and time periods. The insights generated help understand trends in user engagement, payment behavior, and geographical usage.
+This project visualizes the PhonePe transaction data to offer insights into digital payment adoption across India. Users can filter data by year and quarter to observe transaction trends, state-wise performance, and user engagement metrics.
 
-## Domain
+## Features
 
-Finance / Payment Systems
+- Interactive Dashboard built with Streamlit
+- Real-time filtering by Year and Quarter
+- Visualizations including:
+  - Top 10 States by Transaction Amount
+  - State-wise Transaction Count Pie Chart
+  - Quarterly Transaction Trend for Top States
+  - TreeMap for Transaction Amount
+- FastAPI backend that serves filtered data from PostgreSQL
+- Clean UI with styling and smooth transitions
 
-## Skills Demonstrated
+## Technologies Used
 
-- Data Extraction
-- ETL (Extract, Transform, Load)
-- SQL Proficiency
-- Data Analysis using Python
-- Data Visualization using Chart.js and HTML
-- FastAPI for backend APIs
-- Git and GitHub for version control
-- Documentation
-
-## Problem Statement
-
-With increasing digital payment adoption, analyzing large-scale transaction data is essential for business strategy and service improvements. This project focuses on:
-
-- Aggregated analysis of payment categories
-- User engagement metrics
-- Insurance-related insights
-- State- and district-level mapping
-- Top-performing states, districts, and brands
-
-## Approach
-
-### 1. Data Extraction
-
-- Cloned the GitHub dataset from PhonePe Pulse
-- Cleaned and transformed CSVs using Python
-- Stored structured data into PostgreSQL
-
-### 2. Backend with FastAPI
-
-- Created REST API endpoints for aggregated data
-- Enabled filters (by year, quarter)
-
-### 3. Frontend Visualization
-
-- Built interactive dashboards with HTML and Chart.js
-- Included filters for year/quarter
-- Visualized transaction counts and amounts (bar and pie charts)
-
-### 4. Insights Generated
-
-- Recharge & bill payments and peer-to-peer transfers dominate transaction volume
-- Mobile brand usage highlights Xiaomi and Samsung as leaders in earlier years
-- Transaction volume has grown significantly year over year
-
-## Setup Instructions
-
-### Prerequisites
-
-- Python 3.8+
+- Python
+- Streamlit
+- FastAPI
 - PostgreSQL
-- Git
-- VS Code (or any IDE)
+- Pandas
+- Plotly
 
-### Installation
 
-```bash
-git clone https://github.com/yourusername/PhonePe_Insights_Project.git
-cd PhonePe_Insights_Project
-pip install -r requirements.txt
+## How It Works
+
+1. **Data Transformation**  
+   PhonePe GitHub data is transformed into structured CSVs like `map_transaction.csv` and `map_user.csv`.
+
+2. **Database Setup**  
+   PostgreSQL is used to store and query these datasets.
+
+3. **FastAPI Backend**  
+   Provides endpoints for filtered transaction/user data:
+   - `/map/transactions?year=2020&quarter=2`
+   - `/map/users?year=2021&quarter=3`
+
+4. **Streamlit Dashboard**  
+   Visualizes the data using:
+   - Bar Chart
+   - Pie Chart
+   - Line Chart
+   - TreeMap
+
+
 
 
